@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te Amo - Carta Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Georgia', 'Segoe UI', serif;
+            background: linear-gradient(180deg, #1a0f2e 0%, #2d1b4e 30%, #1f1133 60%, #0f0620 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        /* Estrellas de fondo */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0);
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+        }
+
+        .falling-star {
+            position: fixed;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        /* Secciones */
+        .seccion {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Fondo con efecto de luz */
+        .seccion::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Contenedor de flores y texto */
+        .flores-con-texto {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 80px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* SVG de flores */
+        .flores-svg {
+            width: 300px;
+            height: 350px;
+            filter: drop-shadow(0 10px 30px rgba(255, 105, 180, 0.3));
+            flex-shrink: 0;
+        }
+
+        /* Texto al lado de flores */
+        .texto-flor {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .titulo-seccion {
+            font-family: 'Georgia', serif;
+            font-size: 2.5em;
+            color: #ff69b4;
+            margin-bottom: 30px;
+            font-weight: 400;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .emoji-seccion {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .texto-principal {
+            font-size: 1.3em;
+            line-height: 1.9;
+            color: #e8d4f1;
+            margin-bottom: 20px;
+            max-width: 500px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Lista de puntos */
+        .puntos-lista {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .punto {
+            font-size: 1.1em;
+            color: #d9c7e8;
+            line-height: 1.8;
+            margin-bottom: 18px;
+            padding-left: 35px;
+            position: relative;
+            font-weight: 300;
+        }
+
+        .punto::before {
+            content: "💕";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        /* Caja especial para mensaje romántico */
+        .caja-especial {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.1) 0%, rgba(186, 85, 211, 0.1) 100%);
+            border: 2px solid #ff69b4;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+            margin: 40px auto;
+        }
+
+        .caja-especial .texto-principal {
+            margin: 0;
+            color: #ffb6d9;
+            font-style: italic;
+        }
+
+        /* Divisor */
+        .divisor {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff69b4, transparent);
+            margin: 30px auto;
+        }
+
+        /* Sección final */
+        .seccion-final {
+            text-align: center;
+        }
+
+        .texto-final-grande {
+            font-family: 'Georgia', serif;
+            font-size: 2.5em;
+            color: #ff69b4;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 40px auto;
+            font-weight: 400;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .corazon-latido {
+            font-size: 4em;
+            margin-top: 40px;
+            animation: latido 1.5s ease-in-out infinite;
+        }
+
+        /* Animaciones */
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.4), 0 0 20px rgba(255, 20, 147, 0.2); }
+            50% { text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 20, 147, 0.5); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bloomFloat {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                filter: drop-shadow(0 10px 30px rgba(255, 105, 180, 0.3));
+            }
+            25% {
+                transform: translateY(-15px) scale(1.08);
+                filter: drop-shadow(0 20px 40px rgba(255, 105, 180, 0.5));
+            }
+            50% {
+                transform: translateY(-8px) scale(1.05);
+                filter: drop-shadow(0 15px 35px rgba(255, 105, 180, 0.4));
+            }
+            75% {
+                transform: translateY(-12px) scale(1.06);
+                filter: drop-shadow(0 18px 38px rgba(255, 105, 180, 0.45));
+            }
+        }
+
+        @keyframes petalPulse {
+            0%, 100% {
+                opacity: 0.85;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes flowerGlow {
+            0%, 100% {
+                filter: drop-shadow(0 5px 15px rgba(255, 105, 180, 0.2)) drop-shadow(0 0 10px rgba(255, 105, 180, 0.1));
+            }
+            50% {
+                filter: drop-shadow(0 15px 40px rgba(255, 105, 180, 0.6)) drop-shadow(0 0 25px rgba(255, 105, 180, 0.4));
+            }
+        }
+
+        @keyframes floralDance {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(-10px) rotate(1deg) scale(1.03);
+            }
+            66% {
+                transform: translateY(-5px) rotate(-1deg) scale(1.02);
+            }
+        }
+
+        svg[style*="400px"] {
+            animation: floralDance 5s ease-in-out infinite !important;
+        }
+
+        .flores-svg {
+            animation: fadeIn 1s ease-out, bloomFloat 6s ease-in-out infinite, flowerGlow 4s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(255, 105, 180, 0.3));
+        }
+
+        .flores-svg circle {
+            animation: petalPulse 4s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .flores-svg circle:nth-child(1) { animation-delay: 0s; }
+        .flores-svg circle:nth-child(2) { animation-delay: 0.3s; }
+        .flores-svg circle:nth-child(3) { animation-delay: 0.6s; }
+        .flores-svg circle:nth-child(4) { animation-delay: 0.9s; }
+        .flores-svg circle:nth-child(5) { animation-delay: 1.2s; }
+        .flores-svg circle:nth-child(6) { animation-delay: 1.5s; }
+
+        .texto-flor {
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        /* Flores pequeñas decorativas */
+        .flores-pequenas {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .flor-pequena {
+            position: absolute;
+            font-size: 2em;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .flores-con-texto {
+                gap: 40px;
+                flex-direction: column;
+            }
+
+            .flores-svg {
+                width: 250px;
+                height: 300px;
+            }
+
+            .texto-flor {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .seccion {
+                padding: 40px 20px;
+                min-height: auto;
+                padding-top: 60px;
+                padding-bottom: 60px;
+            }
+
+            .titulo-seccion {
+                font-size: 2em;
+            }
+
+            .emoji-seccion {
+                font-size: 2em;
+            }
+
+            .texto-principal {
+                font-size: 1.1em;
+            }
+
+            .flores-svg {
+                width: 200px;
+                height: 250px;
+            }
+
+            .punto {
+                font-size: 1em;
+            }
+
+            .texto-final-grande {
+                font-size: 1.8em;
+            }
+
+            .corazon-latido {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Estrellas de fondo -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <!-- SECCIÓN 1: PORTADA -->
+        <section class="seccion">
+            <div class="flores-con-texto">
+                <svg class="flores-svg" viewBox="0 0 200 350" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Flores rosas grandes -->
+                    <!-- Flor 1 (izquierda) -->
+                    <circle cx="50" cy="80" r="35" fill="#ff69b4" opacity="0.9"/>
+                    <circle cx="30" cy="60" r="28" fill="#ffb6c1" opacity="0.8"/>
+                    <circle cx="70" cy="60" r="28" fill="#ffb6c1" opacity="0.8"/>
+                    <circle cx="50" cy="40" r="30" fill="#ff1493" opacity="0.9"/>
+                    <circle cx="50" cy="100" r="25" fill="#ffc0d9" opacity="0.7"/>
+                    <circle cx="50" cy="70" r="20" fill="#ffeb3b" opacity="0.8"/>
+                    <line x1="50" y1="105" x2="40" y2="200" stroke="#2d5016" stroke-width="3"/>
+                    <line x1="50" y1="105" x2="60" y2="200" stroke="#2d5016" stroke-width="3"/>
+                    <ellipse cx="35" cy="160" rx="6" ry="12" fill="#2d5016" opacity="0.5"/>
+                    <ellipse cx="65" cy="160" rx="6" ry="12" fill="#2d5016" opacity="0.5"/>
+
+                    <!-- Flor 2 (centro) -->
+                    <circle cx="130" cy="60" r="38" fill="#ff1493" opacity="0.95"/>
+                    <circle cx="105" cy="40" r="30" fill="#ff69b4" opacity="0.9"/>
+                    <circle cx="155" cy="40" r="30" fill="#ff69b4" opacity="0.9"/>
+                    <circle cx="130" cy="20" r="35" fill="#ffb6c1" opacity="0.8"/>
+                    <circle cx="130" cy="90" r="28" fill="#ffc0d9" opacity="0.7"/>
+                    <circle cx="130" cy="60" r="22" fill="#ffeb3b" opacity="0.8"/>
+                    <line x1="130" y1="90" x2="125" y2="220" stroke="#2d5016" stroke-width="3.5"/>
+                    <line x1="130" y1="90" x2="135" y2="220" stroke="#2d5016" stroke-width="3.5"/>
+                    <ellipse cx="110" cy="150" rx="7" ry="13" fill="#2d5016" opacity="0.5"/>
+                    <ellipse cx="150" cy="150" rx="7" ry="13" fill="#2d5016" opacity="0.5"/>
+
+                    <!-- Flor 3 (derecha) -->
+                    <circle cx="180" cy="100" r="32" fill="#ff69b4" opacity="0.85"/>
+                    <circle cx="165" cy="80" r="26" fill="#ffb6c1" opacity="0.8"/>
+                    <circle cx="195" cy="80" r="26" fill="#ffb6c1" opacity="0.8"/>
+                    <circle cx="180" cy="65" r="30" fill="#ff1493" opacity="0.9"/>
+                    <circle cx="180" cy="120" r="23" fill="#ffc0d9" opacity="0.7"/>
+                    <circle cx="180" cy="90" r="18" fill="#ffeb3b" opacity="0.8"/>
+                    <line x1="180" y1="120" x2="172" y2="240" stroke="#2d5016" stroke-width="2.5"/>
+                    <line x1="180" y1="120" x2="188" y2="240" stroke="#2d5016" stroke-width="2.5"/>
+                    <ellipse cx="168" cy="180" rx="5" ry="10" fill="#2d5016" opacity="0.5"/>
+                    <ellipse cx="192" cy="180" rx="5" ry="10" fill="#2d5016" opacity="0.5"/>
+
+                    <!-- Pasto de fondo -->
+                    <line x1="20" y1="240" x2="25" y2="330" stroke="#2d5016" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="180" y1="250" x2="185" y2="340" stroke="#2d5016" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="10" y1="280" x2="12" y2="350" stroke="#2d5016" stroke-width="1" opacity="0.5"/>
+                    <line x1="190" y1="290" x2="193" y2="350" stroke="#2d5016" stroke-width="1" opacity="0.5"/>
+                </svg>
+
+                <div class="texto-flor">
+                    <div class="emoji-seccion">💗</div>
+                    <h1 class="titulo-seccion">Para ti</h1>
+                    <div class="divisor"></div>
+                    <div class="puntos-lista">
+                        <p class="punto">Para la persona que hace que mis días sean más bonitos.</p>
+                        <p class="punto">Aunque estés lejos, siempre estás cerquita de mi corazón.</p>
+                        <p class="punto">Hice este pequeño espacio para ti, porque decirte 'te amo' nunca me parece suficiente.</p>
+                        <p class="punto">Te extraño más de lo que estas palabras pueden explicar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: TE EXTRAÑO -->
+        <section class="seccion">
+            <div class="flores-con-texto">
+                <div class="texto-flor">
+                    <div class="emoji-seccion">🥺</div>
+                    <h2 class="titulo-seccion">Te extraño</h2>
+                    <div class="divisor"></div>
+                    <div class="puntos-lista">
+                        <p class="punto">Hay días en los que daría cualquier cosa por tenerte aquí, abrazarte y olvidarme del mundo un ratito contigo.</p>
+                        <p class="punto">Extrañarte se ha vuelto parte de mis días, pero amarte sigue siendo mi parte favorita.</p>
+                        <p class="punto">No importa cuánto tiempo pase, siempre termino pensando en ti.</p>
+                        <p class="punto">Ojalá pudiera convertir toda esta distancia en un abrazo.</p>
+                    </div>
+                </div>
+
+                <svg class="flores-svg" viewBox="0 0 200 350" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Flores rosa pastel grandes -->
+                    <!-- Flor 1 (izquierda) -->
+                    <circle cx="50" cy="90" r="36" fill="#ffb6c1" opacity="0.9"/>
+                    <circle cx="28" cy="65" r="28" fill="#ffc0d9" opacity="0.8"/>
+                    <circle cx="72" cy="65" r="28" fill="#ffc0d9" opacity="0.8"/>
+                    <circle cx="50" cy="45" r="32" fill="#ff69b4" opacity="0.9"/>
+                    <circle cx="50" cy="110" r="26" fill="#ffe4e8" opacity="0.7"/>
+                    <circle cx="50" cy="75" r="21" fill="#ffeb3b" opacity="0.8"/>
+                    <line x1="50" y1="115" x2="42" y2="210" stroke="#2d5016" stroke-width="3"/>
+                    <line x1="50" y1="115" x2="58" y2="210" stroke="#2d5016" stroke-width="3"/>
+
+                    <!-- Flor 2 (centro grande) -->
+                    <circle cx="135" cy="70" r="40" fill="#ff69b4" opacity="0.95"/>
+                    <circle cx="105" cy="48" r="32" fill="#ffb6c1" opacity="0.9"/>
+                    <circle cx="165" cy="48" r="32" fill="#ffb6c1" opacity="0.9"/>
+                    <circle cx="135" cy="25" r="36" fill="#ffc0d9" opacity="0.85"/>
+                    <circle cx="135" cy="100" r="30" fill="#ffe4e8" opacity="0.75"/>
+                    <circle cx="135" cy="70" r="24" fill="#ffeb3b" opacity="0.8"/>
+                    <line x1="135" y1="100" x2="128" y2="230" stroke="#2d5016" stroke-width="3.5"/>
+                    <line x1="135" y1="100" x2="142" y2="230" stroke="#2d5016" stroke-width="3.5"/>
+
+                    <!-- Pasto -->
+                    <line x1="15" y1="250" x2="18" y2="330" stroke="#2d5016" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="185" y1="260" x2="188" y2="340" stroke="#2d5016" stroke-width="1.5" opacity="0.6"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: TE AMO -->
+        <section class="seccion">
+            <div class="flores-con-texto">
+                <svg class="flores-svg" viewBox="0 0 200 350" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Flores rojas profundas grandes -->
+                    <!-- Flor 1 (izquierda) -->
+                    <circle cx="55" cy="85" r="38" fill="#e91e63" opacity="0.95"/>
+                    <circle cx="32" cy="60" r="30" fill="#ff1493" opacity="0.9"/>
+                    <circle cx="78" cy="60" r="30" fill="#ff1493" opacity="0.9"/>
+                    <circle cx="55" cy="40" r="35" fill="#ff69b4" opacity="0.88"/>
+                    <circle cx="55" cy="108" r="28" fill="#ffb6c1" opacity="0.75"/>
+                    <circle cx="55" cy="75" r="23" fill="#ffeb3b" opacity="0.82"/>
+                    <line x1="55" y1="110" x2="45" y2="215" stroke="#1b4d2e" stroke-width="3.5"/>
+                    <line x1="55" y1="110" x2="65" y2="215" stroke="#1b4d2e" stroke-width="3.5"/>
+
+                    <!-- Flor 2 (centro grande) -->
+                    <circle cx="140" cy="65" r="42" fill="#ff1493" opacity="0.96"/>
+                    <circle cx="110" cy="40" r="34" fill="#e91e63" opacity="0.92"/>
+                    <circle cx="170" cy="40" r="34" fill="#e91e63" opacity="0.92"/>
+                    <circle cx="140" cy="18" r="38" fill="#ff69b4" opacity="0.89"/>
+                    <circle cx="140" cy="95" r="32" fill="#ffb6c1" opacity="0.76"/>
+                    <circle cx="140" cy="65" r="26" fill="#ffeb3b" opacity="0.83"/>
+                    <line x1="140" y1="98" x2="132" y2="225" stroke="#1b4d2e" stroke-width="4"/>
+                    <line x1="140" y1="98" x2="148" y2="225" stroke="#1b4d2e" stroke-width="4"/>
+
+                    <!-- Pasto -->
+                    <line x1="20" y1="260" x2="22" y2="335" stroke="#1b4d2e" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="180" y1="270" x2="183" y2="345" stroke="#1b4d2e" stroke-width="1.5" opacity="0.6"/>
+                </svg>
+
+                <div class="texto-flor">
+                    <div class="emoji-seccion">❤️</div>
+                    <h2 class="titulo-seccion">Te amo</h2>
+                    <div class="divisor"></div>
+                    <div class="puntos-lista">
+                        <p class="punto">Te amo por quien eres, por cómo me haces sentir y por todos esos pequeños momentos que contigo se vuelven enormes.</p>
+                        <p class="punto">No necesito un día especial para recordarte que eres una de las personas más importantes de mi vida.</p>
+                        <p class="punto">Si pudiera elegir de nuevo, volvería a elegirte a ti.</p>
+                        <p class="punto">Mi lugar favorito siempre será donde pueda estar contigo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: Te quiero mi michel -->
+        <section class="seccion">
+            <div class="emoji-seccion">🌙</div>
+            <h2 class="titulo-seccion">Te quiero mi michel</h2>
+            <div class="divisor"></div>
+            
+            <div class="caja-especial">
+                <p class="texto-principal">Si alguna vez dudas de cuánto te amo, recuerda que incluso cuando no estás conmigo, estás en mis pensamientos, en mis planes y en cada pequeño detalle que me hace sonreír.</p>
+            </div>
+
+            <svg style="width: 400px; height: 250px; margin-top: 30px; filter: drop-shadow(0 10px 30px rgba(255, 105, 180, 0.3));" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Flores moradas grandes -->
+                <!-- Flor 1 -->
+                <circle cx="60" cy="70" r="35" fill="#ba55d3" opacity="0.9"/>
+                <circle cx="38" cy="48" r="28" fill="#da70d6" opacity="0.8"/>
+                <circle cx="82" cy="48" r="28" fill="#da70d6" opacity="0.8"/>
+                <circle cx="60" cy="28" r="33" fill="#ee82ee" opacity="0.85"/>
+                <circle cx="60" cy="95" r="26" fill="#daa5dd" opacity="0.7"/>
+                <circle cx="60" cy="65" r="21" fill="#ffeb3b" opacity="0.75"/>
+                <line x1="60" y1="98" x2="52" y2="190" stroke="#2d5016" stroke-width="3"/>
+                <line x1="60" y1="98" x2="68" y2="190" stroke="#2d5016" stroke-width="3"/>
+
+                <!-- Flor 2 -->
+                <circle cx="180" cy="80" r="36" fill="#da70d6" opacity="0.9"/>
+                <circle cx="155" cy="55" r="29" fill="#ee82ee" opacity="0.8"/>
+                <circle cx="205" cy="55" r="29" fill="#ee82ee" opacity="0.8"/>
+                <circle cx="180" cy="32" r="34" fill="#daa5dd" opacity="0.85"/>
+                <circle cx="180" cy="105" r="27" fill="#daa5dd" opacity="0.7"/>
+                <circle cx="180" cy="75" r="22" fill="#ffeb3b" opacity="0.75"/>
+                <line x1="180" y1="108" x2="172" y2="195" stroke="#2d5016" stroke-width="3"/>
+                <line x1="180" y1="108" x2="188" y2="195" stroke="#2d5016" stroke-width="3"/>
+
+                <!-- Flor 3 pequeña -->
+                <circle cx="240" cy="100" r="28" fill="#ba55d3" opacity="0.85"/>
+                <circle cx="223" cy="83" r="22" fill="#da70d6" opacity="0.75"/>
+                <circle cx="257" cy="83" r="22" fill="#da70d6" opacity="0.75"/>
+                <circle cx="240" cy="65" r="26" fill="#ee82ee" opacity="0.8"/>
+                <circle cx="240" cy="120" r="20" fill="#daa5dd" opacity="0.65"/>
+                <circle cx="240" cy="95" r="16" fill="#ffeb3b" opacity="0.7"/>
+                <line x1="240" y1="122" x2="235" y2="195" stroke="#2d5016" stroke-width="2"/>
+                <line x1="240" y1="122" x2="245" y2="195" stroke="#2d5016" stroke-width="2"/>
+            </svg>
+        </section>
+
+        <!-- SECCIÓN FINAL -->
+        <section class="seccion seccion-final">
+            <div class="texto-final-grande">
+                Te extraño.
+                <br>Te amo.
+                <br><span style="font-size: 1.1em; letter-spacing: 2px;">Y espero poder abrazarte muy pronto.</span>
+            </div>
+            <div class="corazon-latido">❤️</div>
+        </section>
+    </div>
+
+    <script>
+        // Crear estrellas de fondo estáticas
+        function crearEstrellas() {
+            const starsContainer = document.getElementById('stars');
+            const numEstrellas = 80;
+
+            for (let i = 0; i < numEstrellas; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 2 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Crear estrellas que caen continuamente
+        function crearEstrellasCayendo() {
+            const body = document.body;
+
+            setInterval(() => {
+                const fallingStar = document.createElement('div');
+                fallingStar.className = 'falling-star';
+
+                const size = Math.random() * 2 + 0.5;
+                fallingStar.style.width = size + 'px';
+                fallingStar.style.height = size + 'px';
+                fallingStar.style.left = Math.random() * 100 + '%';
+                fallingStar.style.top = '-10vh';
+
+                const duration = Math.random() * 3 + 2;
+                fallingStar.style.animation = `fall ${duration}s linear forwards`;
+
+                body.appendChild(fallingStar);
+
+                setTimeout(() => fallingStar.remove(), duration * 1000);
+            }, 300);
+        }
+
+        // Animar pétalos de las flores
+        function animarPétalos() {
+            const flores = document.querySelectorAll('.flores-svg circle');
+            flores.forEach((petal, index) => {
+                const delay = index * 0.3;
+                petal.style.animationDelay = delay + 's';
+
+                // Agregar efecto de brillo adicional
+                petal.style.filter = 'drop-shadow(0 0 3px rgba(255, 255, 255, 0.5))';
+            });
+        }
+
+        crearEstrellas();
+        crearEstrellasCayendo();
+        animarPétalos();
+
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
